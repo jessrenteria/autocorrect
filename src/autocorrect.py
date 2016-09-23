@@ -53,14 +53,13 @@ class Autocorrecter(object):
         return words
 
     def getNeighbors(self, word):
-        word = word.lower()
-        neighbor_words = set()
+        words = set()
         for idx in range(len(word)):
             for c in location.getNeighbors(word[idx]):
                 candidate = word[:idx] + c + word[idx + 1:]
                 if candidate in self.words:
-                    neighbor_words.add(candidate)
-        return neighbor_words
+                    words.add(candidate)
+        return words
 
     def printSet(self, words, n):
         count = 0
@@ -71,6 +70,7 @@ class Autocorrecter(object):
                 break
 
     def correct(self, word):
+        word = word.lower()
         if word in self.words:
             return
 
