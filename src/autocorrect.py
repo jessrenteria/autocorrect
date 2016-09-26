@@ -2,12 +2,21 @@ import location
 from trie import Trie
 
 class Autocorrecter(object):
+    """Autocorrects invalid words.
+
+    Attributes:
+        suggestion_limit: Maximum number of corrections to display.
+        words: Set of valid words.
+        trie: Prefix tree of valid words.
+    """
     def __init__(self, dict_file):
+        """Inits Autocorrecter with the words in dict_file."""
         self.suggestion_limit = 10
         self.words = self.makeDictionary(dict_file)
         self.trie = self.makeTrie(self.words)
 
     def makeDictionary(self, dict_file):
+        """Creates a set of words from dict_file."""
         words = set()
         with open(dict_file, 'r') as f:
             for word in f:
@@ -15,15 +24,18 @@ class Autocorrecter(object):
         return words
 
     def makeTrie(self, words):
+        """Creates a trie from dict_file."""
         trie = Trie()
         for word in words:
             trie.addWord(word)
         return trie
 
     def isWord(self, word):
+        """Returns whether word is in the dictionary or not."""
         return word.lower() in self.words
 
     def removeLetter(self, word):
+        """Returns the set of words formed by deleting a single letter."""
         words = set()
         if len(word) < 2:
             return words
@@ -39,6 +51,7 @@ class Autocorrecter(object):
         return words
 
     def addLetter(self, word):
+        """Returns the set of words formed by adding a single letter."""
         words = set()
         node = self.trie
         for idx in range(0, len(word) + 1):
@@ -53,6 +66,7 @@ class Autocorrecter(object):
         return words
 
     def getNeighbors(self, word):
+        """Returns the set of words formed by swapping close letters."""
         words = set()
         for idx in range(len(word)):
             for c in location.getNeighbors(word[idx]):
@@ -62,6 +76,7 @@ class Autocorrecter(object):
         return words
 
     def printSet(self, words, n):
+        """Prints n elements of a set."""
         count = 0
         for word in words:
             print(word + ' ', end='')
@@ -70,6 +85,7 @@ class Autocorrecter(object):
                 break
 
     def correct(self, word):
+        """Corrects word."""
         word = word.lower()
         if word in self.words:
             return

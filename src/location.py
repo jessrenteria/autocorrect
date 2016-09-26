@@ -1,4 +1,4 @@
-neighbors = {
+NEIGHBORS = {
     'q': {'w', 'a', 's'},
     'w': {'q', 'e', 'a', 's', 'd'},
     'e': {'w', 'r', 's', 'd', 'f'},
@@ -26,7 +26,7 @@ neighbors = {
 }
 
 def getNeighbors(c):
-    if c in neighbors:
-        return neighbors[c]
+    if c in NEIGHBORS:
+        return NEIGHBORS[c]
     else:
         return set()
